@@ -1,6 +1,6 @@
 import { PYQ, StudyNote, UpdateItem, QuizQuestion, PYQPdf, TestPaper } from './types';
 
-// Central Repository Link provided by user
+// Central Repository Link provided by user (Fallback)
 export const PYQ_DRIVE_LINK = "https://drive.google.com/drive/folders/1EqoxILI0CvhN6mt2-4Cl9b3BedkUaAIC?usp=sharing";
 
 export const MOCK_UPDATES: UpdateItem[] = [
@@ -81,81 +81,287 @@ export const TEST_PAPERS: TestPaper[] = [
 ];
 
 export const MOCK_PYQ_PDFS: PYQPdf[] = [
-  // Combined Prelims 2025
-  {
-    id: 'combined-2025-b-m21',
-    year: 2025,
-    title: 'Combined Group B Prelims 2025 (M21)',
-    examType: 'Combined',
-    paperType: 'Prelims',
-    fileName: 'MPSC_Combined_2025_GroupB_M21.pdf'
-  },
-  {
-    id: 'combined-2025-c-p21',
-    year: 2025,
-    title: 'Combined Group C Prelims 2025 (P21)',
-    examType: 'Combined',
-    paperType: 'Prelims',
-    fileName: 'MPSC_Combined_2025_GroupC_P21.pdf'
-  },
-
   // Rajyaseva 2025
-  { id: 'rj-2025-p1', year: 2025, title: 'Rajyaseva Prelims 2025 GS (Paper 1)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2025_GS.pdf' },
-  { id: 'rj-2025-p2', year: 2025, title: 'Rajyaseva Prelims 2025 CSAT (Paper 2)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2025_CSAT.pdf' },
+  { 
+    id: 'rj-2025-p1', 
+    year: 2025, 
+    title: 'Rajyaseva Prelims 2025 GS (Paper 1)', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2025_GS.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/129VSyxzhyaFNA-xgtWVsCrnb_XF4_cGK/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2025-p2', 
+    year: 2025, 
+    title: 'Rajyaseva Prelims 2025 CSAT (Paper 2)', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2025_CSAT.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1qbRGrBxQCNTJ_FoZDReWGXF1Z9ul9-Q5/view?usp=drive_link'
+  },
 
   // Rajyaseva 2024
-  { id: 'rj-2024-p1', year: 2024, title: 'Rajyaseva Prelims 2024 GS (Code E21)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2024_GS_E21.pdf' },
-  { id: 'rj-2024-p2', year: 2024, title: 'Rajyaseva Prelims 2024 CSAT', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2024_CSAT.pdf' },
+  { 
+    id: 'rj-2024-p1', 
+    year: 2024, 
+    title: 'Rajyaseva Prelims 2024 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2024_GS_E21.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/160t-JDqbkkqx7gEhHYkXdgYBbt9GQ5u-/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2024-p2', 
+    year: 2024, 
+    title: 'Rajyaseva Prelims 2024 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2024_CSAT.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/10s8WvFYDmpOjTuMTsqdvnUZoUpl9SlY0/view?usp=drive_link'
+  },
 
   // Rajyaseva 2023
-  { id: 'rj-2023-p1', year: 2023, title: 'Rajyaseva Prelims 2023 GS (Code R17)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2023_GS_R17.pdf' },
-  { id: 'rj-2023-p2', year: 2023, title: 'Rajyaseva Prelims 2023 CSAT', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2023_CSAT.pdf' },
+  { 
+    id: 'rj-2023-p1', 
+    year: 2023, 
+    title: 'Rajyaseva Prelims 2023 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2023_GS_R17.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1RAUYDe-eZ0gCH1fBceqNJL68Y1UYSMWt/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2023-p2', 
+    year: 2023, 
+    title: 'Rajyaseva Prelims 2023 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2023_CSAT.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1TqOM28yZT24_gTx_CGijCg4_dYG0YeQA/view?usp=drive_link'
+  },
 
   // Rajyaseva 2022
-  { id: 'rj-2022-p1', year: 2022, title: 'Rajyaseva Prelims 2022 GS (Code H15)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2022_GS_H15.pdf' },
-  { id: 'rj-2022-p2', year: 2022, title: 'Rajyaseva Prelims 2022 CSAT (Code I15)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2022_CSAT_I15.pdf' },
+  { 
+    id: 'rj-2022-p1', 
+    year: 2022, 
+    title: 'Rajyaseva Prelims 2022 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2022_GS_H15.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1PRpT9muH697D8HLWxRxwGTKPlj3CtnpL/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2022-p2', 
+    year: 2022, 
+    title: 'Rajyaseva Prelims 2022 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2022_CSAT_I15.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1DtXo8G4V4hnqFTt3T95kCpKdwG5X1e_O/view?usp=drive_link'
+  },
 
   // Rajyaseva 2021
-  { id: 'rj-2021-p1', year: 2021, title: 'Rajyaseva Prelims 2021 GS (Code 014)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2021_GS_014.pdf' },
-  { id: 'rj-2021-p2', year: 2021, title: 'Rajyaseva Prelims 2021 CSAT (Code P14)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2021_CSAT_P14.pdf' },
+  { 
+    id: 'rj-2021-p1', 
+    year: 2021, 
+    title: 'Rajyaseva Prelims 2021 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2021_GS_014.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/17LOVn9cNMnJ1ZEElzFlMs6ppYU8IUjc5/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2021-p2', 
+    year: 2021, 
+    title: 'Rajyaseva Prelims 2021 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2021_CSAT_P14.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1y2431JVgov4ZuS8MNTZr5VFeA9lPkRyT/view?usp=drive_link'
+  },
 
   // Rajyaseva 2020
-  { id: 'rj-2020-p1', year: 2020, title: 'Rajyaseva Prelims 2020 GS (Code Y13)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2020_GS_Y13.pdf' },
-  { id: 'rj-2020-p2', year: 2020, title: 'Rajyaseva Prelims 2020 CSAT (Code U12)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2020_CSAT_U12.pdf' },
+  { 
+    id: 'rj-2020-p1', 
+    year: 2020, 
+    title: 'Rajyaseva Prelims 2020 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2020_GS_Y13.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1HD0EGKzR4EzuGp6efMHuTUlv1mw-6rj8/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2020-p2', 
+    year: 2020, 
+    title: 'Rajyaseva Prelims 2020 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2020_CSAT_U12.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1AjZFKvGzHbv5uLBfCho3DhNmS_Wgaa2T/view?usp=drive_link'
+  },
 
   // Rajyaseva 2019
-  { id: 'rj-2019-p1', year: 2019, title: 'Rajyaseva Prelims 2019 GS (Code T12)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2019_GS_T12.pdf' },
-  { id: 'rj-2019-p2', year: 2019, title: 'Rajyaseva Prelims 2019 CSAT', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2019_CSAT.pdf' },
+  { 
+    id: 'rj-2019-p1', 
+    year: 2019, 
+    title: 'Rajyaseva Prelims 2019 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2019_GS_T12.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1Wd0x0fk0oSpBCOvIUib4QJnjFN7mfiRl/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2019-p2', 
+    year: 2019, 
+    title: 'Rajyaseva Prelims 2019 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2019_CSAT.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/18DtniSMfP8NyLBtxm9xJkaY35eCxCd_5/view?usp=drive_link'
+  },
 
   // Rajyaseva 2018
-  { id: 'rj-2018-p1', year: 2018, title: 'Rajyaseva Prelims 2018 GS', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2018_GS.pdf' },
-  { id: 'rj-2018-p2', year: 2018, title: 'Rajyaseva Prelims 2018 CSAT (Code G11)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2018_CSAT_G11.pdf' },
+  { 
+    id: 'rj-2018-p1', 
+    year: 2018, 
+    title: 'Rajyaseva Prelims 2018 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2018_GS.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1B_mmqnUQ25xdb6GtNf8hP-WE0_sUMSi-/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2018-p2', 
+    year: 2018, 
+    title: 'Rajyaseva Prelims 2018 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2018_CSAT_G11.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1iurThBjrWm2dPjBTi1YGce4sGK2l41ut/view?usp=drive_link'
+  },
 
   // Rajyaseva 2017
-  { id: 'rj-2017-p1', year: 2017, title: 'Rajyaseva Prelims 2017 GS (Code W08)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2017_GS_W08.pdf' },
-  { id: 'rj-2017-p2', year: 2017, title: 'Rajyaseva Prelims 2017 CSAT (Code X08)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2017_CSAT_X08.pdf' },
+  { 
+    id: 'rj-2017-p1', 
+    year: 2017, 
+    title: 'Rajyaseva Prelims 2017 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2017_GS_W08.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/15dUgF7lSLYTfMYD8shW71nkKKgzLniUv/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2017-p2', 
+    year: 2017, 
+    title: 'Rajyaseva Prelims 2017 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2017_CSAT_X08.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1ih2azxRwSWkWLLuoUJSx3Eydhnb03u5k/view?usp=drive_link'
+  },
 
   // Rajyaseva 2016
-  { id: 'rj-2016-p1', year: 2016, title: 'Rajyaseva Prelims 2016 GS (Code N07)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2016_GS_N07.pdf' },
-  { id: 'rj-2016-p2', year: 2016, title: 'Rajyaseva Prelims 2016 CSAT', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2016_CSAT.pdf' },
+  { 
+    id: 'rj-2016-p1', 
+    year: 2016, 
+    title: 'Rajyaseva Prelims 2016 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2016_GS_N07.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1n93geJyQewtUb4erdfIR4VFR8epDrmAD/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2016-p2', 
+    year: 2016, 
+    title: 'Rajyaseva Prelims 2016 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2016_CSAT.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1l3byo4kHtiC-KSIa2sfeEmbTagDMAppW/view?usp=drive_link'
+  },
 
   // Rajyaseva 2015
-  { id: 'rj-2015-p1', year: 2015, title: 'Rajyaseva Prelims 2015 GS (Code V05)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2015_GS_V05.pdf' },
-  { id: 'rj-2015-p2', year: 2015, title: 'Rajyaseva Prelims 2015 CSAT (Code W05)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2015_CSAT_W05.pdf' },
+  { 
+    id: 'rj-2015-p1', 
+    year: 2015, 
+    title: 'Rajyaseva Prelims 2015 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2015_GS_V05.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1s2PAm860E32cAuGTGIxhDnwSX1sf4rGv/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2015-p2', 
+    year: 2015, 
+    title: 'Rajyaseva Prelims 2015 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2015_CSAT_W05.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1S_xD6ohdaJjriJ2nGIIEoF1J0iqsYYr3/view?usp=drive_link'
+  },
 
   // Rajyaseva 2014
-  { id: 'rj-2014-p1', year: 2014, title: 'Rajyaseva Prelims 2014 GS', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2014_GS.pdf' },
-  { id: 'rj-2014-p2', year: 2014, title: 'Rajyaseva Prelims 2014 CSAT (Code HO3)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2014_CSAT_HO3.pdf' },
+  { 
+    id: 'rj-2014-p1', 
+    year: 2014, 
+    title: 'Rajyaseva Prelims 2014 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2014_GS.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1iBkbCH64C2v_nbrtIb55rNDkchcPIhFL/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2014-p2', 
+    year: 2014, 
+    title: 'Rajyaseva Prelims 2014 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2014_CSAT_HO3.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1bV49Q6C7KcpZOV6o7QzKwa0kuY8USlOz/view?usp=drive_link'
+  },
 
   // Rajyaseva 2013
-  { id: 'rj-2013-p1', year: 2013, title: 'Rajyaseva Prelims 2013 GS (Code XOI)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2013_GS_XOI.pdf' },
-  { id: 'rj-2013-p2', year: 2013, title: 'Rajyaseva Prelims 2013 CSAT (Code YOI)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2013_CSAT_YOI.pdf' },
+  { 
+    id: 'rj-2013-p1', 
+    year: 2013, 
+    title: 'Rajyaseva Prelims 2013 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2013_GS_XOI.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1P0dn4fTN5tBRLdTJgBGOhlv1g75FkvGZ/view?usp=drive_link'
+  },
+  { 
+    id: 'rj-2013-p2', 
+    year: 2013, 
+    title: 'Rajyaseva Prelims 2013 CSAT', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2013_CSAT_YOI.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1wBwiV-o2KaYlvf8BAZpqyb0K8PejxUGZ/view?usp=drive_link'
+  },
 
   // Rajyaseva 2012 (Single Paper)
-  { id: 'rj-2012-p1', year: 2012, title: 'Rajyaseva Prelims 2012 GS (Code PRM)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2012_GS_PRM.pdf' },
+  { 
+    id: 'rj-2012-p1', 
+    year: 2012, 
+    title: 'Rajyaseva Prelims 2012 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2012_GS_PRM.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/14DRrbkYagqsU_4siBiKItGW6UmjpWSwP/view?usp=drive_link'
+  },
 
   // Rajyaseva 2011 (Single Paper)
-  { id: 'rj-2011-p1', year: 2011, title: 'Rajyaseva Prelims 2011 GS (Code KNM)', examType: 'Rajyaseva', paperType: 'Prelims', fileName: 'Rajyaseva_Pre_2011_GS_KNM.pdf' },
+  { 
+    id: 'rj-2011-p1', 
+    year: 2011, 
+    title: 'Rajyaseva Prelims 2011 GS', 
+    examType: 'Rajyaseva', 
+    paperType: 'Prelims', 
+    fileName: 'Rajyaseva_Pre_2011_GS_KNM.pdf',
+    downloadUrl: 'https://drive.google.com/file/d/1n0ih42i7IX3Ol6kMyLsDMVjvBd380anw/view?usp=drive_link'
+  },
 ];
 
 export const TEST_SERIES_QUESTIONS: QuizQuestion[] = [

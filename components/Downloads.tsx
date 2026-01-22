@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FileText, Trash2, ExternalLink, Download as DownloadIcon, FolderOpen, RefreshCcw } from 'lucide-react';
-import { PYQ_DRIVE_LINK } from '../constants';
+import { FileText, Trash2, ExternalLink, Download as DownloadIcon, FolderOpen, Eye } from 'lucide-react';
 
-const Downloads: React.FC = () => {
+interface DownloadsProps {
+  onOpenPdf: (url: string, title: string) => void;
+}
+
+const Downloads: React.FC<DownloadsProps> = ({ onOpenPdf }) => {
   const [downloadedFiles, setDownloadedFiles] = useState<any[]>([]);
 
   useEffect(() => {
@@ -32,15 +35,9 @@ const Downloads: React.FC = () => {
   };
 
   const handleOpenFile = (file: any) => {
-      // If the saved record has a URL (e.g. Drive Link), open it.
       if (file.url) {
-        window.open(file.url, '_blank');
-        return;
+        onOpenPdf(file.url, file.displayTitle || file.name);
       }
-      
-      // Fallback for older records or strictly local files (if any in future)
-      const pdfUrl = `/pdfs/${file.name}`;
-      window.open(pdfUrl, '_blank');
   };
 
   return (
@@ -91,9 +88,9 @@ const Downloads: React.FC = () => {
                 <button 
                     onClick={() => handleOpenFile(file)}
                     className="p-2 text-gray-400 hover:text-brand-500 transition-colors"
-                    title="Open File"
+                    title="View PDF"
                 >
-                  <ExternalLink className="w-5 h-5" />
+                  <Eye className="w-5 h-5" />
                 </button>
                 <button 
                     onClick={() => removeDownload(file.id)}
@@ -112,7 +109,7 @@ const Downloads: React.FC = () => {
             <DownloadIcon className="w-10 h-10" />
           </div>
           <h3 className="text-lg font-bold text-gray-800">No downloads yet</h3>
-          <p className="text-sm text-gray-500 max-w-[200px] mt-1">Files you download from the PYQ Bank will appear here.</p>
+          <p className="text-sm text-gray-500 max-w-[200px] mt-1">Files you view from the PYQ Bank will appear here.</p>
         </div>
       )}
 

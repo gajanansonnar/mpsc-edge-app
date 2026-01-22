@@ -1,9 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { MOCK_PYQ_PDFS, PYQ_DRIVE_LINK } from '../constants';
 import { PYQPdf } from '../types';
-import { FileText, Download, Search, Filter, Calendar, ChevronDown, ChevronRight, X, ExternalLink, FolderOpen } from 'lucide-react';
+import { FileText, Download, Search, Filter, Calendar, ChevronDown, ChevronRight, X, ExternalLink, FolderOpen, Eye } from 'lucide-react';
 
-const PYQSection: React.FC = () => {
+interface PYQSectionProps {
+  onOpenPdf: (url: string, title: string) => void;
+}
+
+const PYQSection: React.FC<PYQSectionProps> = ({ onOpenPdf }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedExam, setSelectedExam] = useState<string>('All');
   const [selectedYear, setSelectedYear] = useState<string>('All');
@@ -42,16 +46,10 @@ const PYQSection: React.FC = () => {
     setSearchTerm('');
   };
 
-  const handleDownload = (pdf: PYQPdf) => {
-    // If a specific external URL is provided in types/constants, use it.
-    // Otherwise, default to the central Drive Folder provided by the user.
+  const handleDownloadAction = (pdf: PYQPdf) => {
     const targetUrl = pdf.downloadUrl || PYQ_DRIVE_LINK;
     
-    // Open in new tab
-    window.open(targetUrl, '_blank');
-
-    // Save to LocalStorage for "My Downloads" section persistence
-    // We store the 'url' property so we can open it again later.
+    // Save to LocalStorage for "My Downloads" history
     const downloadRecord = {
         id: Date.now().toString(),
         name: pdf.fileName,
@@ -64,14 +62,16 @@ const PYQSection: React.FC = () => {
 
     try {
         const existingDownloads = JSON.parse(localStorage.getItem('mpsc_downloads') || '[]');
-        // Check for duplicates based on name/title
-        if (!existingDownloads.some((d: any) => d.name === pdf.fileName)) {
+        if (!existingDownloads.some((d: any) => d.displayTitle === pdf.title)) {
             const updatedDownloads = [downloadRecord, ...existingDownloads];
             localStorage.setItem('mpsc_downloads', JSON.stringify(updatedDownloads));
         }
     } catch (e) {
         console.error("Failed to save download history", e);
     }
+
+    // Now open the PDF in the viewer
+    onOpenPdf(targetUrl, pdf.title);
   };
 
   const openFullRepo = () => {
@@ -219,14 +219,23 @@ const PYQSection: React.FC = () => {
                                   <div className="text-[11px] text-gray-500 line-clamp-1">{pdf.title}</div>
                                 </div>
                               </div>
-                              <button 
-                                onClick={() => handleDownload(pdf)}
-                                title="Open PDF in Drive"
-                                className="p-2 bg-white text-brand-600 rounded-full shadow-sm hover:bg-brand-500 hover:text-white transition-all active:scale-90 flex items-center space-x-1"
-                              >
-                                <span className="text-[10px] font-bold hidden sm:inline">Open</span>
-                                <ExternalLink className="w-4 h-4" />
-                              </button>
+                              <div className="flex space-x-1">
+                                <button 
+                                    onClick={() => handleDownloadAction(pdf)}
+                                    title="View PDF"
+                                    className="p-2 bg-brand-100 text-brand-600 rounded-xl shadow-sm hover:bg-brand-500 hover:text-white transition-all active:scale-90 flex items-center space-x-1"
+                                >
+                                    <Eye className="w-4 h-4" />
+                                    <span className="text-[10px] font-bold px-1">View</span>
+                                </button>
+                                <button 
+                                    onClick={() => window.open(pdf.downloadUrl || PYQ_DRIVE_LINK, '_blank')}
+                                    title="Open in Drive"
+                                    className="p-2 bg-white text-gray-400 rounded-xl border border-gray-100 hover:text-brand-500 transition-all"
+                                >
+                                    <ExternalLink className="w-4 h-4" />
+                                </button>
+                              </div>
                             </div>
                           ))}
                         </div>

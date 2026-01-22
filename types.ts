@@ -10,6 +10,7 @@ export enum AppView {
   ABOUT = 'ABOUT',
   DOWNLOADS = 'DOWNLOADS',
   PRIVACY_POLICY = 'PRIVACY_POLICY',
+  PDF_VIEWER = 'PDF_VIEWER',
 }
 
 export type TestCategory = 'MOCK' | 'PYQ' | 'QUIZ' | 'LONG';

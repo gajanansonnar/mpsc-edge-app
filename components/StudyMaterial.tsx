@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { MOCK_NOTES } from '../constants';
 import { StudyNote } from '../types';
-import { FileText, Clock, ChevronLeft, Download, Filter } from 'lucide-react';
+import { FileText, Clock, ChevronLeft, Download, Filter, Eye } from 'lucide-react';
 
-const StudyMaterial: React.FC = () => {
+interface StudyMaterialProps {
+  onOpenPdf: (url: string, title: string) => void;
+}
+
+const StudyMaterial: React.FC<StudyMaterialProps> = ({ onOpenPdf }) => {
   const [activeNote, setActiveNote] = useState<StudyNote | null>(null);
   const [selectedSubject, setSelectedSubject] = useState<string>('All');
 
@@ -64,12 +68,25 @@ const StudyMaterial: React.FC = () => {
             })}
         </div>
         
-        <button 
-            onClick={() => handleDownloadNote(activeNote)}
-            className="mt-6 flex items-center justify-center w-full py-3 bg-gray-900 text-white rounded-xl font-medium shadow-lg active:scale-95 transition-transform"
-        >
-            <Download className="w-4 h-4 mr-2" /> Download PDF
-        </button>
+        <div className="grid grid-cols-2 gap-3 mt-6">
+            <button 
+                onClick={() => handleDownloadNote(activeNote)}
+                className="flex items-center justify-center py-3 bg-gray-900 text-white rounded-xl font-medium shadow-lg active:scale-95 transition-transform"
+            >
+                <Download className="w-4 h-4 mr-2" /> Download
+            </button>
+            <button 
+                onClick={() => {
+                  // Since these notes are text/markdown, we'll simulate a "View PDF" using a Google Doc style viewer
+                  // or just let the user know they can only view papers for now.
+                  // For the sake of the request, I'll alert or mock.
+                  alert("PDF View for notes will be available in the next update. Using in-app viewer for PYQs currently!");
+                }}
+                className="flex items-center justify-center py-3 bg-brand-50 text-brand-600 border border-brand-200 rounded-xl font-medium active:scale-95 transition-transform"
+            >
+                <Eye className="w-4 h-4 mr-2" /> PDF Mode
+            </button>
+        </div>
       </div>
     );
   }

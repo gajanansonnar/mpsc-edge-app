@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Home, Book, Sparkles, FileText, Menu, Settings as SettingsIcon, Info, Download } from 'lucide-react';
 import Dashboard from './components/Dashboard';
@@ -11,25 +10,40 @@ import Settings from './components/Settings';
 import About from './components/About';
 import Downloads from './components/Downloads';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import PDFViewer from './components/PDFViewer';
 import { AppView } from './types';
 
 function App() {
   const [currentView, setCurrentView] = useState<AppView>(AppView.DASHBOARD);
   const [showMenu, setShowMenu] = useState(false);
+  const [activePdf, setActivePdf] = useState<{ url: string; title: string } | null>(null);
+
+  const handleOpenPdf = (url: string, title: string) => {
+    setActivePdf({ url, title });
+    setCurrentView(AppView.PDF_VIEWER);
+  };
 
   // Helper to render current view
   const renderView = () => {
     switch (currentView) {
       case AppView.DASHBOARD: return <Dashboard onChangeView={setCurrentView} />;
-      case AppView.PYQ: return <PYQSection />;
-      case AppView.STUDY_MATERIAL: return <StudyMaterial />;
+      case AppView.PYQ: return <PYQSection onOpenPdf={handleOpenPdf} />;
+      case AppView.STUDY_MATERIAL: return <StudyMaterial onOpenPdf={handleOpenPdf} />;
       case AppView.TEST_SERIES: return <TestSeries />;
       case AppView.UPDATES: return <DailyUpdates />;
       case AppView.DOUBT_SOLVER: return <DoubtSolver />;
       case AppView.SETTINGS: return <Settings onChangeView={setCurrentView} />;
       case AppView.ABOUT: return <About />;
-      case AppView.DOWNLOADS: return <Downloads />;
+      case AppView.DOWNLOADS: return <Downloads onOpenPdf={handleOpenPdf} />;
       case AppView.PRIVACY_POLICY: return <PrivacyPolicy onBack={() => setCurrentView(AppView.SETTINGS)} />;
+      case AppView.PDF_VIEWER: 
+        return activePdf ? (
+            <PDFViewer 
+                url={activePdf.url} 
+                title={activePdf.title} 
+                onBack={() => setCurrentView(AppView.PYQ)} 
+            />
+        ) : <Dashboard onChangeView={setCurrentView} />;
       default: return <Dashboard onChangeView={setCurrentView} />;
     }
   };
@@ -46,6 +60,7 @@ function App() {
         case AppView.ABOUT: return 'About Us';
         case AppView.DOWNLOADS: return 'My Downloads';
         case AppView.PRIVACY_POLICY: return 'Privacy Policy';
+        case AppView.PDF_VIEWER: return 'PDF Viewer';
         default: return 'MPSC Edge';
     }
   };

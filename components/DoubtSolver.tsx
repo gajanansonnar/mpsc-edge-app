@@ -38,9 +38,14 @@ const DoubtSolver: React.FC = () => {
             prev.map(msg => msg.id === modelMessageId ? { ...msg, text: textChunk } : msg)
         );
       });
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Doubt Solver Error:", error);
       setMessages(prev => 
-        prev.map(msg => msg.id === modelMessageId ? { ...msg, text: "Sorry, I encountered an error. Please check your internet connection or API key.", isError: true } : msg)
+        prev.map(msg => msg.id === modelMessageId ? { 
+            ...msg, 
+            text: `Sorry, I encountered an error: ${error.message || "Please check your internet connection or API key."}`, 
+            isError: true 
+        } : msg)
       );
     } finally {
       setIsLoading(false);

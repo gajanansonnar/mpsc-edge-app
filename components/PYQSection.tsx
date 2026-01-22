@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { MOCK_PYQ_PDFS, PYQ_DRIVE_LINK } from '../constants';
 import { PYQPdf } from '../types';
-import { FileText, Download, Search, Filter, Calendar, ChevronDown, ChevronRight, X, ExternalLink, FolderOpen, Eye } from 'lucide-react';
+import { FileText, Download, Search, Filter, Calendar, ChevronDown, ChevronRight, X } from 'lucide-react';
 
 interface PYQSectionProps {
   onOpenPdf: (url: string, title: string) => void;
@@ -74,32 +74,11 @@ const PYQSection: React.FC<PYQSectionProps> = ({ onOpenPdf }) => {
     onOpenPdf(targetUrl, pdf.title);
   };
 
-  const openFullRepo = () => {
-    window.open(PYQ_DRIVE_LINK, '_blank');
-  };
-
   return (
     <div className="space-y-6 pb-24 animate-fade-in">
       <div className="flex flex-col space-y-1">
         <h2 className="text-2xl font-bold text-gray-800">PYQ PDF Bank</h2>
         <p className="text-gray-500 text-sm">Official MPSC question papers from 2011 to 2025.</p>
-      </div>
-
-      {/* Google Drive Repository Banner */}
-      <div 
-        onClick={openFullRepo}
-        className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-4 text-white shadow-lg shadow-blue-200 cursor-pointer hover:scale-[1.01] transition-transform active:scale-[0.99] flex items-center justify-between"
-      >
-        <div className="flex items-center space-x-3">
-          <div className="bg-white/20 p-2 rounded-lg backdrop-blur-md">
-            <FolderOpen className="w-6 h-6 text-white" />
-          </div>
-          <div>
-            <h3 className="font-bold text-sm">Access All PDFs on Drive</h3>
-            <p className="text-[10px] text-blue-100 opacity-90 mt-0.5">Click here to view original files (2011-2025)</p>
-          </div>
-        </div>
-        <ExternalLink className="w-5 h-5 opacity-80" />
       </div>
       
       {/* Search and Filters */}
@@ -222,18 +201,11 @@ const PYQSection: React.FC<PYQSectionProps> = ({ onOpenPdf }) => {
                               <div className="flex space-x-1">
                                 <button 
                                     onClick={() => handleDownloadAction(pdf)}
-                                    title="View PDF"
+                                    title="Download and View"
                                     className="p-2 bg-brand-100 text-brand-600 rounded-xl shadow-sm hover:bg-brand-500 hover:text-white transition-all active:scale-90 flex items-center space-x-1"
                                 >
-                                    <Eye className="w-4 h-4" />
-                                    <span className="text-[10px] font-bold px-1">View</span>
-                                </button>
-                                <button 
-                                    onClick={() => window.open(pdf.downloadUrl || PYQ_DRIVE_LINK, '_blank')}
-                                    title="Open in Drive"
-                                    className="p-2 bg-white text-gray-400 rounded-xl border border-gray-100 hover:text-brand-500 transition-all"
-                                >
-                                    <ExternalLink className="w-4 h-4" />
+                                    <Download className="w-4 h-4" />
+                                    <span className="text-[10px] font-bold px-1">Download</span>
                                 </button>
                               </div>
                             </div>

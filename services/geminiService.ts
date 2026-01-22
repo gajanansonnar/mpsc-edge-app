@@ -2,7 +2,8 @@ import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
 class GeminiService {
   private modelName = 'gemini-3-flash-preview';
-  private chatHistory: { role: 'user' | 'model', parts: [{ text: string }] }[] = [];
+  // Use flexible typing for history to ensure compatibility with SDK
+  private chatHistory: any[] = [];
 
   public async generateQuote(): Promise<string> {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -21,20 +22,20 @@ class GeminiService {
   public async sendMessageStream(message: string, onChunk: (text: string) => void): Promise<string> {
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
-    // Using a fresh chat instance with existing history to maintain context
-    const chat = ai.chats.create({
-      model: this.modelName,
-      config: {
-        systemInstruction: "You are an expert tutor for MPSC (Maharashtra Public Service Commission) aspirants. Answer questions concisely, accurately, and explain concepts clearly. You can answer in English or Marathi based on the user's input. Provide exam-oriented explanations.",
-        temperature: 0.7,
-      },
-      history: this.chatHistory,
-    });
-
-    let fullResponse = '';
     try {
+      // Create chat with existing history
+      const chat = ai.chats.create({
+        model: this.modelName,
+        config: {
+          systemInstruction: "You are an expert tutor for MPSC (Maharashtra Public Service Commission) aspirants. Answer questions concisely, accurately, and explain concepts clearly. You can answer in English or Marathi based on the user's input. Provide exam-oriented explanations.",
+          temperature: 0.7,
+        },
+        history: [...this.chatHistory], // Pass a copy of the history
+      });
+
       const resultStream = await chat.sendMessageStream({ message });
 
+      let fullResponse = '';
       for await (const chunk of resultStream) {
         const responseChunk = chunk as GenerateContentResponse;
         const text = responseChunk.text;
@@ -45,15 +46,17 @@ class GeminiService {
       }
 
       // Update local history after successful completion
-      this.chatHistory.push({ role: 'user', parts: [{ text: message }] });
-      this.chatHistory.push({ role: 'model', parts: [{ text: fullResponse }] });
+      if (fullResponse) {
+        this.chatHistory.push({ role: 'user', parts: [{ text: message }] });
+        this.chatHistory.push({ role: 'model', parts: [{ text: fullResponse }] });
+      }
+
+      return fullResponse;
       
     } catch (error) {
       console.error("Error sending message to Gemini:", error);
       throw error;
     }
-
-    return fullResponse;
   }
 }
 

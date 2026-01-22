@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Sparkles, Target, ShieldCheck, Heart, Mail, Globe } from 'lucide-react';
 
@@ -12,21 +13,21 @@ const About: React.FC = () => {
     <div className="space-y-8 pb-24 animate-fade-in">
       {/* App Brand Logo & Header */}
       <div className="text-center space-y-4 pt-4">
-        <div className="w-28 h-28 bg-brand-500 rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-brand-100 mx-auto transform -rotate-3">
+        <div className="w-28 h-28 bg-brand-500 rounded-[2.5rem] flex items-center justify-center shadow-2xl shadow-brand-100 dark:shadow-none mx-auto transform -rotate-3">
           <Sparkles className="w-14 h-14 text-white" />
         </div>
         <div>
-          <h2 className="text-3xl font-black text-gray-800 tracking-tight">MPSC Edge</h2>
-          <p className="text-brand-600 font-bold text-sm tracking-widest uppercase mt-1">Your Ultimate Study Companion</p>
+          <h2 className="text-3xl font-black text-gray-800 dark:text-white tracking-tight">MPSC Edge</h2>
+          <p className="text-brand-600 dark:text-brand-400 font-bold text-sm tracking-widest uppercase mt-1">Your Ultimate Study Companion</p>
         </div>
       </div>
 
       {/* Mission Section */}
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 space-y-4">
-        <h3 className="text-lg font-bold text-gray-800 flex items-center">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700 space-y-4">
+        <h3 className="text-lg font-bold text-gray-800 dark:text-white flex items-center">
           <Heart className="w-5 h-5 mr-2 text-rose-500" /> Our Mission
         </h3>
-        <p className="text-gray-600 leading-relaxed text-sm">
+        <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm">
           MPSC Edge was born out of a simple idea: every aspirant, regardless of their financial background, deserves access to top-tier preparation tools. 
           We combine traditional study methods with cutting-edge AI to provide a comprehensive, free platform that helps you crack the Maharashtra Public Service Commission exams.
         </p>
@@ -37,13 +38,13 @@ const About: React.FC = () => {
         <h3 className="px-1 text-xs font-black text-gray-400 uppercase tracking-widest">Why Choose Us</h3>
         <div className="grid grid-cols-1 gap-4">
           {features.map((f, i) => (
-            <div key={i} className="bg-white p-4 rounded-2xl border border-gray-50 shadow-sm flex items-start space-x-4">
-              <div className="p-3 rounded-xl bg-brand-50 text-brand-500">
+            <div key={i} className="bg-white dark:bg-gray-800 p-4 rounded-2xl border border-gray-50 dark:border-gray-700 shadow-sm flex items-start space-x-4">
+              <div className="p-3 rounded-xl bg-brand-50 dark:bg-brand-900/20 text-brand-500 dark:text-brand-400">
                 <f.icon className="w-6 h-6" />
               </div>
               <div>
-                <h4 className="font-bold text-gray-800">{f.title}</h4>
-                <p className="text-xs text-gray-500 mt-1">{f.desc}</p>
+                <h4 className="font-bold text-gray-800 dark:text-white">{f.title}</h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{f.desc}</p>
               </div>
             </div>
           ))}

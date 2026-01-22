@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Shield, ChevronLeft, Lock, Eye, Server, FileText } from 'lucide-react';
 
@@ -33,7 +34,7 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
     <div className="space-y-6 pb-24 animate-fade-in">
       <button 
         onClick={onBack}
-        className="flex items-center text-sm font-bold text-gray-500 hover:text-brand-600 transition-colors"
+        className="flex items-center text-sm font-bold text-gray-500 hover:text-brand-600 dark:text-gray-400 dark:hover:text-brand-400 transition-colors"
       >
         <ChevronLeft className="w-4 h-4 mr-1" /> Back to Settings
       </button>
@@ -41,27 +42,27 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
       <div className="flex flex-col space-y-2">
         <div className="flex items-center space-x-2">
           <Shield className="w-6 h-6 text-emerald-500" />
-          <h2 className="text-2xl font-bold text-gray-800">Privacy Policy</h2>
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Privacy Policy</h2>
         </div>
-        <p className="text-gray-500 text-sm">Last updated: May 24, 2024</p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">Last updated: May 24, 2024</p>
       </div>
 
-      <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100">
-        <p className="text-gray-600 text-sm leading-relaxed italic">
+      <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 shadow-sm border border-gray-100 dark:border-gray-700">
+        <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed italic">
           At MPSC Edge, we take your privacy seriously. This policy describes how we handle your data to help you achieve your goal of cracking the MPSC exams.
         </p>
       </div>
 
       <div className="space-y-4">
         {sections.map((section, idx) => (
-          <div key={idx} className="bg-white p-5 rounded-2xl border border-gray-50 shadow-sm space-y-3">
+          <div key={idx} className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-50 dark:border-gray-700 shadow-sm space-y-3">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-brand-50 rounded-lg text-brand-500">
+              <div className="p-2 bg-brand-50 dark:bg-brand-900/20 rounded-lg text-brand-500 dark:text-brand-400">
                 <section.icon className="w-5 h-5" />
               </div>
-              <h3 className="font-bold text-gray-800">{section.title}</h3>
+              <h3 className="font-bold text-gray-800 dark:text-white">{section.title}</h3>
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed pl-11">
+            <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed pl-11">
               {section.content}
             </p>
           </div>

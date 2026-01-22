@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
@@ -39,6 +41,10 @@
       }
       body {
         background-color: #f3f4f6;
+        transition: background-color 0.3s;
+      }
+      .dark body {
+        background-color: #111827;
       }
     </style>
   <script type="importmap">

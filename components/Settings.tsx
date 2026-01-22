@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { 
   Bell, 
@@ -8,20 +9,34 @@ import {
   Info, 
   ChevronRight,
   Monitor,
-  Layout
+  Layout,
+  User
 } from 'lucide-react';
 import { AppView } from '../types';
 
 interface SettingsProps {
   onChangeView: (view: AppView) => void;
+  darkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
-const Settings: React.FC<SettingsProps> = ({ onChangeView }) => {
+const Settings: React.FC<SettingsProps> = ({ onChangeView, darkMode, toggleDarkMode }) => {
   const [isEnglish, setIsEnglish] = useState(true);
   const [notifications, setNotifications] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
 
   const settingSections = [
+    {
+      title: 'Account',
+      items: [
+        { 
+          icon: User, 
+          label: 'My Profile', 
+          value: 'Sanaya', 
+          onClick: () => onChangeView(AppView.PROFILE),
+          color: 'text-purple-600' 
+        },
+      ]
+    },
     {
       title: 'Interface',
       items: [
@@ -37,7 +52,7 @@ const Settings: React.FC<SettingsProps> = ({ onChangeView }) => {
           label: 'Dark Theme', 
           type: 'toggle', 
           enabled: darkMode, 
-          onClick: () => setDarkMode(!darkMode),
+          onClick: toggleDarkMode,
           color: 'text-indigo-500' 
         },
         { 
@@ -107,37 +122,37 @@ const Settings: React.FC<SettingsProps> = ({ onChangeView }) => {
   return (
     <div className="space-y-6 pb-24 animate-fade-in">
       <div className="flex flex-col space-y-1">
-        <h2 className="text-2xl font-bold text-gray-800">Settings</h2>
-        <p className="text-gray-500 text-sm">Configure your application preferences.</p>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Settings</h2>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">Configure your application preferences.</p>
       </div>
 
       <div className="space-y-8">
         {settingSections.map((section, sIdx) => (
           <div key={sIdx} className="space-y-3">
             <h3 className="px-1 text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{section.title}</h3>
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden transition-colors">
               {section.items.map((item, iIdx) => (
                 <button
                   key={iIdx}
                   onClick={item.onClick}
-                  className={`w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors border-b last:border-b-0 border-gray-50 group`}
+                  className={`w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors border-b last:border-b-0 border-gray-50 dark:border-gray-700 group`}
                 >
                   <div className="flex items-center space-x-4">
-                    <div className={`p-2.5 rounded-xl bg-gray-50 ${item.color} group-hover:scale-110 transition-transform`}>
+                    <div className={`p-2.5 rounded-xl bg-gray-50 dark:bg-gray-700 ${item.color} group-hover:scale-110 transition-transform`}>
                       <item.icon className="w-5 h-5" />
                     </div>
-                    <span className="text-sm font-bold text-gray-700">{item.label}</span>
+                    <span className="text-sm font-bold text-gray-700 dark:text-gray-200">{item.label}</span>
                   </div>
                   
                   <div className="flex items-center">
                     {item.type === 'toggle' ? (
-                      <div className={`w-11 h-6 rounded-full relative transition-colors ${item.enabled ? 'bg-brand-500' : 'bg-gray-200'}`}>
+                      <div className={`w-11 h-6 rounded-full relative transition-colors ${item.enabled ? 'bg-brand-500' : 'bg-gray-200 dark:bg-gray-600'}`}>
                         <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${item.enabled ? 'left-6' : 'left-1'}`} />
                       </div>
                     ) : (
                       <div className="flex items-center space-x-2">
                         {item.value && <span className="text-xs text-gray-400 font-bold">{item.value}</span>}
-                        <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-brand-500 transition-colors" />
+                        <ChevronRight className="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-brand-500 transition-colors" />
                       </div>
                     )}
                   </div>

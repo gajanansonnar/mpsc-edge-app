@@ -1,5 +1,8 @@
 import { PYQ, StudyNote, UpdateItem, QuizQuestion, PYQPdf, TestPaper } from './types';
 
+// Central Repository Link provided by user
+export const PYQ_DRIVE_LINK = "https://drive.google.com/drive/folders/1EqoxILI0CvhN6mt2-4Cl9b3BedkUaAIC?usp=sharing";
+
 export const MOCK_UPDATES: UpdateItem[] = [
   {
     id: '1',

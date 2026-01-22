@@ -23,6 +23,20 @@ const StudyMaterial: React.FC = () => {
     ? MOCK_NOTES 
     : MOCK_NOTES.filter(note => note.subject === selectedSubject);
 
+  const handleDownloadNote = (note: StudyNote) => {
+    // Generate a simple text file representing the note content
+    const fileContent = `MPSC EDGE NOTE\n\nTitle: ${note.title}\nSubject: ${note.subject}\nRead Time: ${note.readTime}\n\n${note.content}`;
+    const blob = new Blob([fileContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${note.title.replace(/\s+/g, '_')}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
   if (activeNote) {
     return (
       <div className="h-full flex flex-col pb-20 animate-fade-in">
@@ -50,7 +64,10 @@ const StudyMaterial: React.FC = () => {
             })}
         </div>
         
-        <button className="mt-6 flex items-center justify-center w-full py-3 bg-gray-900 text-white rounded-xl font-medium shadow-lg active:scale-95 transition-transform">
+        <button 
+            onClick={() => handleDownloadNote(activeNote)}
+            className="mt-6 flex items-center justify-center w-full py-3 bg-gray-900 text-white rounded-xl font-medium shadow-lg active:scale-95 transition-transform"
+        >
             <Download className="w-4 h-4 mr-2" /> Download PDF
         </button>
       </div>

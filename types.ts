@@ -40,6 +40,7 @@ export interface PYQPdf {
   examType: 'Rajyaseva' | 'Combined' | 'Technical';
   paperType: 'Prelims' | 'Mains';
   fileName: string;
+  downloadUrl?: string; // External URL for download
 }
 
 export interface StudyNote {

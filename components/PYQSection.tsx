@@ -1,16 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import { MOCK_PYQ_PDFS } from '../constants';
-import { FileText, Download, Search, Filter, Calendar, ChevronDown, ChevronRight, X } from 'lucide-react';
+import { MOCK_PYQ_PDFS, PYQ_DRIVE_LINK } from '../constants';
+import { PYQPdf } from '../types';
+import { FileText, Download, Search, Filter, Calendar, ChevronDown, ChevronRight, X, ExternalLink, FolderOpen } from 'lucide-react';
 
 const PYQSection: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedExam, setSelectedExam] = useState<string>('All');
   const [selectedYear, setSelectedYear] = useState<string>('All');
-  const [expandedYear, setExpandedYear] = useState<number | null>(2025); // Default to the latest added papers
+  const [expandedYear, setExpandedYear] = useState<number | null>(2025);
 
   const examTypes = ['All', 'Rajyaseva', 'Combined'];
   
-  // Extract unique years from mock data
   const availableYears = useMemo(() => {
     const years = Array.from(new Set(MOCK_PYQ_PDFS.map(pdf => pdf.year))).sort((a, b) => b - a);
     return ['All', ...years.map(String)];
@@ -24,7 +24,6 @@ const PYQSection: React.FC = () => {
     return matchesSearch && matchesExam && matchesYear;
   });
 
-  // Group by year
   const groupedByYear = filteredPDFs.reduce((acc, pdf) => {
     if (!acc[pdf.year]) acc[pdf.year] = [];
     acc[pdf.year].push(pdf);
@@ -43,11 +42,64 @@ const PYQSection: React.FC = () => {
     setSearchTerm('');
   };
 
+  const handleDownload = (pdf: PYQPdf) => {
+    // If a specific external URL is provided in types/constants, use it.
+    // Otherwise, default to the central Drive Folder provided by the user.
+    const targetUrl = pdf.downloadUrl || PYQ_DRIVE_LINK;
+    
+    // Open in new tab
+    window.open(targetUrl, '_blank');
+
+    // Save to LocalStorage for "My Downloads" section persistence
+    // We store the 'url' property so we can open it again later.
+    const downloadRecord = {
+        id: Date.now().toString(),
+        name: pdf.fileName,
+        displayTitle: pdf.title,
+        size: 'PDF', 
+        date: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }),
+        type: 'PYQ',
+        url: targetUrl
+    };
+
+    try {
+        const existingDownloads = JSON.parse(localStorage.getItem('mpsc_downloads') || '[]');
+        // Check for duplicates based on name/title
+        if (!existingDownloads.some((d: any) => d.name === pdf.fileName)) {
+            const updatedDownloads = [downloadRecord, ...existingDownloads];
+            localStorage.setItem('mpsc_downloads', JSON.stringify(updatedDownloads));
+        }
+    } catch (e) {
+        console.error("Failed to save download history", e);
+    }
+  };
+
+  const openFullRepo = () => {
+    window.open(PYQ_DRIVE_LINK, '_blank');
+  };
+
   return (
     <div className="space-y-6 pb-24 animate-fade-in">
       <div className="flex flex-col space-y-1">
         <h2 className="text-2xl font-bold text-gray-800">PYQ PDF Bank</h2>
-        <p className="text-gray-500 text-sm">Official MPSC question papers from 2010 to 2025.</p>
+        <p className="text-gray-500 text-sm">Official MPSC question papers from 2011 to 2025.</p>
+      </div>
+
+      {/* Google Drive Repository Banner */}
+      <div 
+        onClick={openFullRepo}
+        className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-4 text-white shadow-lg shadow-blue-200 cursor-pointer hover:scale-[1.01] transition-transform active:scale-[0.99] flex items-center justify-between"
+      >
+        <div className="flex items-center space-x-3">
+          <div className="bg-white/20 p-2 rounded-lg backdrop-blur-md">
+            <FolderOpen className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h3 className="font-bold text-sm">Access All PDFs on Drive</h3>
+            <p className="text-[10px] text-blue-100 opacity-90 mt-0.5">Click here to view original files (2011-2025)</p>
+          </div>
+        </div>
+        <ExternalLink className="w-5 h-5 opacity-80" />
       </div>
       
       {/* Search and Filters */}
@@ -164,14 +216,16 @@ const PYQSection: React.FC = () => {
                                 </div>
                                 <div>
                                   <div className="text-sm font-bold text-gray-800">{pdf.examType}</div>
-                                  <div className="text-[11px] text-gray-500">{pdf.title}</div>
+                                  <div className="text-[11px] text-gray-500 line-clamp-1">{pdf.title}</div>
                                 </div>
                               </div>
                               <button 
-                                title="Download PDF"
-                                className="p-2 bg-white text-brand-600 rounded-full shadow-sm hover:bg-brand-500 hover:text-white transition-all active:scale-90"
+                                onClick={() => handleDownload(pdf)}
+                                title="Open PDF in Drive"
+                                className="p-2 bg-white text-brand-600 rounded-full shadow-sm hover:bg-brand-500 hover:text-white transition-all active:scale-90 flex items-center space-x-1"
                               >
-                                <Download className="w-4 h-4" />
+                                <span className="text-[10px] font-bold hidden sm:inline">Open</span>
+                                <ExternalLink className="w-4 h-4" />
                               </button>
                             </div>
                           ))}
